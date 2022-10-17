@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <title>Document</title>
+</head>
+<script type="text/babel">
+  function App() {
+    const[minutes, setMinutes] = React.useState();
+    const onChange = (e) => {
+      setMinutes(e.target.value);
+    };
+    return ( //사용자가 보게 될 컴포넌트(JSX문법)
+      <div>
+        <h1 className="hi">Super Converter</h1>
+        <label htmlfor="Minutes">Minutes</label>
+        <input value={minutes} onChange={onChange} id="Minutes" placeholder="Minutes" type="number" />
+        <h4>You want to convert {minutes}</h4>
+        <label htmlfor="Hours">Hours</label>
+        <input id="Hours" placeholder="Hours" type="number" />
+      </div>
+    );
+  }
+  const root = document.getElementById("root");
+  ReactDOM.render(<App />, root);
+</script>
+<body>
+  <div id="root"></div>
+</body>
+</html>
+
+<!--
+state를 세팅하는 데는 2가지 방법이 있다.
+1) 직접 할당 :setState(state +1)
+2)함수를 할당:setState(state => state +1) (함수의 첫번째 인자는 현재 state 이다)
+
+
+-->
