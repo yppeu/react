@@ -5,38 +5,37 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <title>Document</title>
 </head>
-
-<body>
-  <div id="root"></div>
-</body>
 <script type="text/babel">
   const root = document.getElementById("root");
-  let counter = 0;
-  function countUp() {
-    counter = counter + 1;
-    render();
-  }
-
-  function render() {
-    ReactDOM.render(<App />, root);
-  }
-
   function App() {
-   return (
+    const [counter, setCounter] = React.useState(0);//리액트문법
+    // 여기서 let이 아닌 상수 const를 쓰게 된 이유는 
+    // 그래서 알아봤는데 object 를 const 로 지정했을 때는 
+    // obejct 의 값이 아닌 주소를 지정한거래요. 
+    // 쉽게말해 객체의 형태를 지정해준거라서 그 형태 안의 값은 바껴도 되는거라고하네요. 
+    const onClick = () => {
+      console.log(counter+1);
+      setCounter(counter+1);
+      console.log(setCounter);
+    };
+    return ( //사용자가 보게 될 컴포넌트(JSX문법)
       <div>
-        <h3>Total clicks: {counter}</h3>
-        <button onClick={countUp}>Click me</button>
+        <h3>Total clicks:{counter}</h3>
+        <button onClick={onClick}>Click me</button>
       </div>
     );
   }
-  render();
+  ReactDOM.render(<App />, root);
 </script>
-
+<body>
+  <div id="root"></div>
+</body>
 </html>
 
 <!--
@@ -50,5 +49,23 @@
   -> 하지만 UI를 새로고침 해주지 않아서 작동을 안 해보임. (렌더링만 해줄 뿐) 
       그래서 이걸 리렌더링해서 UI에 보여줘야함.
 
+  // const [counter, modifier] = React.useState(0); 란
+     useState{}는 우리에게 배열하나를 줌.
+     변수에 data => data 바꿀 때 사용하는 함수임. 
+     React.useState(0)는 초기값을 설정할 수 있음.
+     즉 첫번째는 초기값이고, 두번째는 그 값을 바꾸는 함수임.
+
+// 변수를 컴포넌트에 연결해서 변수에 데이터를 담은 다음,
+  해당 변수에 담긴값을 바꿔. 
+
+// React.useState() 배열에서
+보통 데이터에는 counter처럼 원하는대로 붙이고
+f는 set 뒤에 데이터 이름을 붙임 (setCounter)
+어떤값을 부여하던 setCounter 함수는 그 값으로 업데이트하고 리렌더링 일으킴
+1. counter라는 데이터를 받음
+2. return()에 그 데이터를 담고 있음 (리턴은 사용자가 보게될 컴포넌트)
+3. 버튼이 클릭되면 counter값을 바꿔줄 함수 호출 -> setCounter
+4. counter의 새로운 값을 가지고 counter 함수를 호출
+5. 그 새로운 값은 setCounter(counter + 1)에 써준 counter + 1
 
 -->
