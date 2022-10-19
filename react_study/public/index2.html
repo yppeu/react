@@ -13,27 +13,51 @@
 </head>
 <script type="text/babel">
   function App() {
-    const[minutes, setMinutes] = React.useState();
+    const [amount, setAmount] = React.useState();
+    const [inverted, setInverted] = React.useState(false);
+    //console.log(flipped);
     const onChange = (e) => {
-      setMinutes(e.target.value);
+      setAmount(e.target.value);
     };
+    const reset = () => setAmount(0);
+    const onInverted = () => setInverted((item) => !item);
     return ( //사용자가 보게 될 컴포넌트(JSX문법)
       <div>
         <h1 className="hi">Super Converter</h1>
-        <label htmlfor="Minutes">Minutes</label>
-        <input value={minutes} onChange={onChange} id="Minutes" placeholder="Minutes" type="number" />
-        <h4>You want to convert {minutes}</h4>
-        <label htmlfor="Hours">Hours</label>
-        <input id="Hours" placeholder="Hours" type="number" />
+        <div>
+          <label htmlfor="Minutes">Minutes</label>
+          <input value={inverted ? amount*60 : amount} 
+          onChange={onChange} 
+          id="Minutes" 
+          placeholder="Minutes" 
+          type="number" 
+          disabled={inverted}
+          />
+          <h4>You want to convert {amount}</h4>
+        </div>
+        <div>
+          <label htmlfor="Hours">Hours</label>
+          <input value={inverted ? amount : Math.round(amount/60)} 
+          id="Hours" 
+          placeholder="Hours" 
+          type="number" 
+          disabled={!inverted}
+          onChange={onChange}
+          />
+        </div>
+        <button onClick={reset}>Reset</button>
+        <button onClick={onInverted}>{inverted ? "turn back" : "Invert"}</button>
       </div>
     );
   }
   const root = document.getElementById("root");
   ReactDOM.render(<App />, root);
 </script>
+
 <body>
   <div id="root"></div>
 </body>
+
 </html>
 
 <!--
