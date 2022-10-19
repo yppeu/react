@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <title>Document</title>
+</head>
+<script type="text/babel">
+function MinutesToHours() {
+    const [amount, setAmount] = React.useState();
+    const [inverted, setInverted] = React.useState(false);
+    //console.log(flipped);
+    const onChange = (e) => {
+      setAmount(e.target.value);
+    };
+    const reset = () => setAmount(0);
+    const onInverted = () => setInverted((item) => !item);
+    return ( //사용자가 보게 될 컴포넌트(JSX문법)
+      <div>
+        <h1 className="hi">Super Converter</h1>
+        <div>
+          <label htmlfor="Minutes">Minutes</label>
+          <input value={inverted ? amount*60 : amount} 
+          onChange={onChange} 
+          id="Minutes" 
+          placeholder="Minutes" 
+          type="number" 
+          disabled={inverted}
+          />
+          <h4>You want to convert {amount}</h4>
+        </div>
+        <div>
+          <label htmlfor="Hours">Hours</label>
+          <input value={inverted ? amount : Math.round(amount/60)} 
+          id="Hours" 
+          placeholder="Hours" 
+          type="number" 
+          disabled={!inverted}
+          onChange={onChange}
+          />
+        </div>
+        <button onClick={reset}>Reset</button>
+        <button onClick={onInverted}>{inverted ? "turn back" : "Invert"}</button>
+      </div>
+    );
+  }
+  function KmToMiles(){
+    return (
+      <h3>KM 2 M</h3>
+    );
+  }
+
+  function App() { // App 컴포넌트가 state를 가지도록 할 것.
+    const [index, setIndex] = React.useState("xx");
+    console.log(index);
+    const onSelect = (e) => {
+      setIndex(e.target.value);
+      console.log(e.target.value);
+    };
+    return ( // root div를 그려주는 역할   <KmToMiles />
+      <div>
+        <h1>Super Converter</h1>
+          <select value={index} onChange={onSelect}>
+            <option value="xx">Select your units</option>
+              <option value="0">Minutes & Hours</option>
+              <option value="1">Km & Miles</option>
+            </select>
+            <hr />
+            {index === "xx" ? "Please select your units" : null}
+            {index === "0" ? <MinutesToHours /> : null}
+            {index === "1" ? <KmToMiles /> : null}
+        </div>
+    );
+  }
+  const root = document.getElementById("root");
+  ReactDOM.render(<App />, root);
+</script>
+
+<body>
+  <div id="root"></div>
+</body>
+
+</html>
+
+<!--
+App() 이라는 컴포넌트란 여기 있는 모든 state와 코드들을 실행하고 렌더링하는 컴포넌트
+
+그리고 컴포넌트는 그 안에 또 다른 컴포넌트를 렌더링 할 수 있다.
+<MinutesToHours /> -> 분할 정복(divide and conquer)
+
+- App 컴포넌트는 root div를 그려주는 역할
+- App 컴포넌트는 그 안에 다른 2개(분->시간, km->miles 컨버터)의 컴포넌트들을 렌더링
+- App 컴포넌트가 state를 가지도록 만들자
+-select는 그냥 HTML
+- {}안에는 JS를 쓸 수 있다.
+- state를 변화시킬 때, 모든게 다 새로고침 된다.
+
+-->
+
+
